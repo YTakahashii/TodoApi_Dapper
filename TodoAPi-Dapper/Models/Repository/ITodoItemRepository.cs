@@ -1,7 +1,8 @@
 ﻿using System;
 namespace TodoAPi_Dapper.Models.Repository
 {
-    public interface ITodoItemRepository
+    public interface ITodoItemRepository: IBaseRepository<TodoItem>
     {
+        
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System;
 namespace TodoAPi_Dapper.Models
 {
-    public interface TodoItem
+    public class TodoItem: IBaseEntity
     {
+        public String Id { get; set; }
+        public String Name { get; set; }
+        public bool IsComplete { get; set; }
     }
 }
