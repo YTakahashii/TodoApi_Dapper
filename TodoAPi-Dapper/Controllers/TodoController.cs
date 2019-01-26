@@ -31,7 +31,7 @@ namespace TodoAPi_Dapper.Controllers
             return Ok(await _unitOfWork.TodoItems.FindAllAsync());
         }
 
-        // GET: api/todo/1
+        // GET: api/todo/id
         [HttpGet("{id}")]
         public async Task<ActionResult<TodoItem>> GetTodoItem(String id)
         {
@@ -54,8 +54,8 @@ namespace TodoAPi_Dapper.Controllers
             return CreatedAtAction("GetTodoItem", new { id = todoItem.Id }, todoItem);
         }
 
-        // PUT: api/todo/1
-        [HttpPut]
+        // PUT: api/todo/id
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem(String id, TodoItem todoItem)
         {
             await _unitOfWork.TodoItems.Update(todoItem);
@@ -63,8 +63,8 @@ namespace TodoAPi_Dapper.Controllers
             return NoContent();
         }
 
-        // DELETE: api/todo/1
-        [HttpDelete]
+        // DELETE: api/todo/id
+        [HttpDelete("{id}")]
         public async Task<ActionResult<TodoItem>> DeleteTodoItem(String id)
         {
             var todoItem = await _unitOfWork.TodoItems.FindAsync(id);
