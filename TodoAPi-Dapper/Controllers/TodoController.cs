@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using TodoAPi_Dapper.Models;
 using TodoAPi_Dapper.Models.Persistance;
 
+/*
 namespace TodoAPi_Dapper.Controllers
 {
     [Route("api/[controller]")]
@@ -80,3 +81,4 @@ namespace TodoAPi_Dapper.Controllers
         }
     }
 }
+*/
