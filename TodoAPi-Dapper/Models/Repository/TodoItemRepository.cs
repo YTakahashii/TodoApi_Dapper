@@ -6,11 +6,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Dapper;
-using TodoAPi_Dapper.Models;
+using Todos;
+using TodoAPi_Dapper.Models.SqlHandler;
 
 namespace TodoAPi_Dapper.Models.Repository
 {
-    public class TodoItemRepository: IBaseRepository<TodoItem>, ITodoItemRepository
+    public class TodoItemRepository: IBaseRepository<Todo>, ITodoItemRepository
     {
         private string connectionString;
         private string tableName = "[dbo].[TodoItems]";
@@ -19,43 +20,40 @@ namespace TodoAPi_Dapper.Models.Repository
         {
             get
             {
-                return new SqlConnection(connectionString);
+                var sql = new SqlHandler.SqlHandler();
+                return sql.GetConnection();
             }
         }
 
+
         public TodoItemRepository()
         {
-
+            // connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public TodoItemRepository(IConfiguration configuration)
-        {
-            connectionString = configuration.GetConnectionString("DefaultConnection");
-        }
-
-        public async Task<TodoItem> FindAsync(String id)
+        public async Task<Todo> FindAsync(String id)
         {
             using(IDbConnection db = Connection)
             {
                 db.Open();
                 var query = $"SELECT * FROM {tableName} WHERE Id LIKE '{id}'";
-                return (await db.QueryAsync<TodoItem>(query)).FirstOrDefault();
+                return (await db.QueryAsync<Todo>(query)).FirstOrDefault();
             }
         }
 
-        public async Task<IEnumerable<TodoItem>> FindAllAsync()
+        public async Task<IEnumerable<Todo>> FindAllAsync()
         {
-            IEnumerable<TodoItem> result;
+            IEnumerable<Todo> result;
             using (IDbConnection db = Connection)
             {
                 db.Open();
                 var query = $"SELECT * FROM {tableName}";
-                result = await db.QueryAsync<TodoItem>(query);
+                result = await db.QueryAsync<Todo>(query);
                 return result;
             }
         }
 
-        public async Task Add(TodoItem entity)
+        public async Task Add(Todo entity)
         {
             using (IDbConnection db = Connection)
             {
@@ -77,7 +75,7 @@ namespace TodoAPi_Dapper.Models.Repository
             }
         }
 
-        public async Task Remove(TodoItem entity)
+        public async Task Remove(Todo entity)
         {
             using (IDbConnection db = Connection)
             {
@@ -98,7 +96,7 @@ namespace TodoAPi_Dapper.Models.Repository
             }
         }
 
-        public async Task Update(TodoItem entity)
+        public async Task Update(Todo entity)
         {
             using (IDbConnection db = Connection)
             {

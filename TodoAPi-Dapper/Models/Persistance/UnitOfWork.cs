@@ -7,16 +7,10 @@ namespace TodoAPi_Dapper.Models.Persistance
     public class UnitOfWork: IUnitOfWork
     {
         private ITodoItemRepository todoItems;
-        private IConfiguration _configuration;
 
         public UnitOfWork()
         {
 
-        }
-
-        public UnitOfWork(IConfiguration configuration)
-        {
-            _configuration = configuration;
         }
 
         public ITodoItemRepository TodoItems
@@ -25,7 +19,7 @@ namespace TodoAPi_Dapper.Models.Persistance
             {
                 if (todoItems == null)
                 {
-                    todoItems = new TodoItemRepository(_configuration);
+                    todoItems = new TodoItemRepository();
                 }
 
                 return todoItems;
